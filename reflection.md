@@ -1,7 +1,7 @@
 # Reflection
 
-Student Name:  name
-Sudent Email:  email
+Student Name:  Gabriel Lucey
+Sudent Email:  gplucey@syr.edu
 
 ## Instructions
 
@@ -23,3 +23,8 @@ Examples:
 
 `--- Reflection Below This Line ---`
 
+I struggled wwith this assignment mainly because I had trouble reading in files to the cache folder. I first had to start out by creating the cache folder but when I tried to create a path, I kept getting an error saying that the repository did not exist. By using Copilot I was able to find out that I needed to import os to ensure that the directory exists and then read the csv files into the directory. After this I was not able to struggle with the assignemnt as much. I was able to concatenate the cost of livings rankings by year using an f string in the url. 
+
+I felt confident in my ability with merging and joining tables in transform.py as I was familiar with matching similar columns and using different typea of joins such as left, right, and inner. I did struggle a bit with making the pivot tables as I am lesss familiar with these concepts. However, I familiarized myself with them by learning how pivot tables use aggregate functions to group columns by unique values.
+
+The load_file function was somewhat difficult as I had the same issue where the cache directory could not be located. However, using Copilot I was able to resolve this and I could view the files on the play.min.io website. Overall, I struggled with concepts relating to reading files into folders, however, I felt confident in my aability to merge and concatenate dataframes.
