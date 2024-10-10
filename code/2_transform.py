@@ -34,20 +34,23 @@ st.dataframe(col_data)
 #clean survey data 
 survey['What country do you work in?'] = survey['What country do you work in?'].apply(pl.clean_country_usa)
 
-#convert states into state codes ex. New York -> NY to merge with col_data
+#merge data frames by state with inner join
 survey_states_combined = survey.merge(state_table, left_on="If you're in the U.S., what state do you work in?", right_on='State', how='inner')
 
+#generate a column `_full_city` based on this formula so that columns will match
 survey_states_combined['_full_city'] = survey_states_combined['What city do you work in?'] + ', ' + survey_states_combined['Abbreviation'] + ', ' + survey_states_combined['What country do you work in?']
 
 st.dataframe(survey_states_combined)
 
+#merge the survey data with the cost of living table
 combined = survey_states_combined.merge(col_data, left_on=['year', '_full_city'], right_on=['year', 'City'], how='inner')
 st.dataframe(combined)
    
-
+#create cleaned column for annual salary
 combined['__annual_salary_cleaned'] = combined["What is your annual salary? (You'll indicate the currency in a later question. If you are part-time or hourly, please enter an annualized equivalent -- what you would earn if you worked the job 40 hours a week, 52 weeks a year.)"].apply(pl.clean_currency)
 
 #generate a column `_annual_salary_adjusted` based on this formula. 
+#use 2 decimal places for clarity
 combined['_annual_salary_adjusted'] = round((combined['__annual_salary_cleaned'] / combined['Cost of Living Index']) * 100, 2)
 
 st.dataframe(combined)
@@ -55,11 +58,13 @@ st.dataframe(combined)
 #Save the engineered dataset to the cache `survey_dataset.csv`
 combined.to_csv(os.path.join(cache_dir, 'survey_dataset.csv'), index=False)
 
+#generate reports for salaries based on age categories
 report1 = combined.pivot_table(index='_full_city', columns='How old are you?', values='_annual_salary_adjusted', aggfunc='mean')
 #save to cache
 report1.to_csv(os.path.join(cache_dir, 'annual_salary_adjusted_by_location_and_age.csv'), index=True)
 st.dataframe(report1)
 
+#generate reports for salaries based on education categories
 report2 = combined.pivot_table(index='_full_city', columns="What is your highest level of education completed?", values='_annual_salary_adjusted', aggfunc='mean')
 #save to cache
 report2.to_csv(os.path.join(cache_dir, 'annual_salary_adjusted_by_location_and_education.csv'), index=True)
