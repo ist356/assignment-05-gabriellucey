@@ -40,5 +40,4 @@ def upload_file(file_name, bucket_name, object_name=None):
     return True
 
 if __name__ == '__main__':
-    #TODO: Write your load code here (remove pass first)
     pass
