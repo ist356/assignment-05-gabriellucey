@@ -59,5 +59,5 @@ for year in years:
     col_year.to_csv(os.path.join(cache_dir, f'col_{year}.csv'), index=False)
 
 # Display dataframes 
-st.dataframe(survey)
-st.dataframe(state_table)
+#st.dataframe(survey)
+#st.dataframe(state_table)

@@ -39,5 +39,21 @@ def upload_file(file_name, bucket_name, object_name=None):
         return False
     return True
 
+#define base path again 
+base_path = r"C:\Users\gabri\OneDrive\Documents\ist356\ist356\assignment-05-gabriellucey\code"
+cache_dir = os.path.join(base_path, 'cache')
+
 if __name__ == '__main__':
-    pass
+    #create a list of files to upload
+    files = ['cache/survey_dataset.csv', 'cache/annual_salary_adjusted_by_location_and_age.csv', 'cache/annual_salary_adjusted_by_location_and_education.csv']
+    bucket = 'ist356gabriellucey'
+    
+    # Check if files exist before uploading
+    for file in files:
+        file_path = os.path.join(base_path, file)
+        # Check if the file exists
+        if not os.path.exists(file_path):
+            print(f"File not found: {file_path}")
+            continue
+        obj = file.replace('cache/', '')
+        upload_file(file_path, bucket, obj)
